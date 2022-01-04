@@ -11,8 +11,8 @@ class Config(object):
     display = False
     finetune = False
 
-    meta_train = '/preprocessed/train_meta.csv'
-    train_root = '/preprocessed'
+    meta_train = '/content/drive/MyDrive/ZaloAI_Hum_To_Song/preprocessed/train_meta.csv'
+    train_root = '/content/drive/MyDrive/ZaloAI_Hum_To_Song/preprocessed/'
     train_list = 'full_data_train.txt'
     val_list = 'full_data_val.txt'
 
