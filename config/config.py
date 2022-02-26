@@ -16,7 +16,7 @@ class Config(object):
     train_list = 'full_data_train.txt'
     val_list = 'full_data_val.txt'
 
-    checkpoints_path = 'checkpoints'
+    checkpoints_path = '/content/drive/MyDrive/ZaloAI_Hum_To_Song/HumToSong Checkpoint/' # 'checkpoints'
     save_interval = 1
 
     train_batch_size = 32  # batch size
