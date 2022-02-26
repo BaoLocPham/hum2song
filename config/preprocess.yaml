@@ -1,5 +1,5 @@
 path:
-    raw_path: "/data"
+    raw_path: "/content/drive/MyDrive/ZaloAI_Hum_To_Song/preprocessed"
     preprocessed_path: "/content/drive/MyDrive/ZaloAI_Hum_To_Song/preprocessed"
     temp_dir: "/content/drive/MyDrive/ZaloAI_Hum_To_Song/temp_dir"
     visualization_path: "/content/drive/MyDrive/ZaloAI_Hum_To_Song/visualization"
