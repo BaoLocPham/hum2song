@@ -9,6 +9,8 @@ from config.config import Config
 from torch.nn import DataParallel
 from torch.optim.lr_scheduler import StepLR
 from val import *
+from models.wrap_resnet import *
+from models.resnet import *
 
 torch.manual_seed(3407)
 
@@ -45,7 +47,7 @@ if __name__ == '__main__':
     if opt.backbone == 'resnet18':
         model = resnet_face18(use_se=opt.use_se)
     elif opt.backbone == 'resnet34':
-        model = resnet34()
+        model = resnet_face34(use_se=opt.use_se)
     elif opt.backbone == 'resnet50':
         model = resnet50()
 
