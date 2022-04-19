@@ -1,6 +1,7 @@
 import argparse
 import os, json, faiss
 from models.resnet import *
+from models.wrap_resnet import get_wrap_resnet
 from utils.utils import *
 from tqdm import tqdm
 from config.config import Config
@@ -9,8 +10,10 @@ import argparse
 
 config = Config()
 start_time_load_model = time.time()
-model = wrap_resnet_face18(False)
-model.load_state_dict(torch.load(os.path.join(config.checkpoints_path, 'resnet18_latest.pth')))
+# model = wrap_wrap_resnet_face18(False)
+# model.load_state_dict(torch.load(os.path.join(config.checkpoints_path, 'resnet18_latest.pth')))
+model = get_wrap_resnet(config=config)
+model.load_state_dict(torch.load(os.path.join(config.checkpoints_path, f'{config.backbone}_latest.pth')))
 model.to('cuda')
 model.eval()
 print('TIME LOAD MODEL: ', time.time() - start_time_load_model)
