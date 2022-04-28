@@ -9,8 +9,7 @@ from config.config import Config
 from torch.nn import DataParallel
 from torch.optim.lr_scheduler import StepLR
 from val import *
-from models.wrap_resnet import *
-from models.resnet import *
+from models import model
 
 torch.manual_seed(3407)
 
@@ -44,7 +43,8 @@ if __name__ == '__main__':
     else:
         criterion = torch.nn.CrossEntropyLoss()
 
-    model = get_resnet(config=opt)
+    model = model.get_model(backbone=opt)
+    
     if opt.metric == 'add_margin':
         metric_fc = AddMarginProduct(512, opt.num_classes, s=30, m=0.35)
     elif opt.metric == 'arc_margin':
