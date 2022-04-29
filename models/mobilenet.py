@@ -192,7 +192,7 @@ class MobileNetV2Face(nn.Module):
             norm_layer: Module specifying the normalization layer to use
 
         """
-        super(MobileNetV2, self).__init__()
+        super(MobileNetV2Face, self).__init__()
 
         if block is None:
             block = InvertedResidual
@@ -200,8 +200,8 @@ class MobileNetV2Face(nn.Module):
         if norm_layer is None:
             norm_layer = nn.BatchNorm2d
 
-        input_channel = 32
-        last_channel = 1280
+        input_channel = 1 # input channel = 1
+        last_channel = 512 # output dim need to be 512 for calculate loss
 
         if inverted_residual_setting is None:
             inverted_residual_setting = [
@@ -223,7 +223,7 @@ class MobileNetV2Face(nn.Module):
         # building first layer
         input_channel = _make_divisible(input_channel * width_mult, round_nearest)
         self.last_channel = _make_divisible(last_channel * max(1.0, width_mult), round_nearest)
-        features = [ConvBNReLU(3, input_channel, stride=2, norm_layer=norm_layer)]
+        features = [ConvBNReLU(1, input_channel, stride=2, norm_layer=norm_layer)] # change channel to 1 
         # building inverted residual blocks
         for t, c, n, s in inverted_residual_setting:
             output_channel = _make_divisible(c * width_mult, round_nearest)
@@ -276,7 +276,7 @@ def mobilenet_v2(pretrained=False, progress=True, **kwargs):
         pretrained (bool): If True, returns a model pre-trained on ImageNet
         progress (bool): If True, displays a progress bar of the download to stderr
     """
-    model = MobileNetV2(**kwargs)
+    model = MobileNetV2Face(**kwargs)
     if pretrained:
         state_dict = load_state_dict_from_url(model_urls['mobilenet_v2'],
                                               progress=progress)

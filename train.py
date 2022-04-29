@@ -43,7 +43,7 @@ if __name__ == '__main__':
     else:
         criterion = torch.nn.CrossEntropyLoss()
 
-    model = model.get_model(backbone=opt)
+    model = model.get_model(config=opt)
     
     if opt.metric == 'add_margin':
         metric_fc = AddMarginProduct(512, opt.num_classes, s=30, m=0.35)
