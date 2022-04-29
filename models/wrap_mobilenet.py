@@ -1,4 +1,4 @@
-from mobilenet import *
+from models.mobilenet import *
 
 def get_mobilenet(config):
     """
