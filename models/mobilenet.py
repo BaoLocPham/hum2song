@@ -235,6 +235,7 @@ class MobileNetV2Face(nn.Module):
         features.append(ConvBNReLU(input_channel, self.last_channel, kernel_size=1, norm_layer=norm_layer))
         # make it nn.Sequential
         self.features = nn.Sequential(*features)
+        self.bn = nn.BatchNorm1d(512)
 
         # # building classifier
         # self.classifier = nn.Sequential(
@@ -262,6 +263,7 @@ class MobileNetV2Face(nn.Module):
         # Cannot use "squeeze" as batch-size can be 1 => must use reshape with x.shape[0]
         x = nn.functional.adaptive_avg_pool2d(x, 1).reshape(x.shape[0], -1)
         # x = self.classifier(x)
+        x = self.bn(x)
         return x
 
     def forward(self, x):
