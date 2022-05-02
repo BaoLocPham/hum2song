@@ -74,6 +74,7 @@ class VGGFace(nn.Module):
             nn.Linear(4096, num_classes),
         )
         self.feature_extraction = nn.Linear(num_classes, self.out_channels)
+        self.bn = nn.BatchNorm1d(self.out_channels)
         if init_weights:
             for m in self.modules():
                 if isinstance(m, nn.Conv2d):
@@ -93,6 +94,7 @@ class VGGFace(nn.Module):
         x = torch.flatten(x, 1)
         x = self.classifier(x)
         x = self.feature_extraction(x)
+        x = self.bn(x)
         return x
 
 def make_layers(cfg: List[Union[str, int]], batch_norm: bool = False) -> nn.Sequential:
