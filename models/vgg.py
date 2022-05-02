@@ -6,8 +6,9 @@ from torch import nn
 from torch.hub import load_state_dict_from_url
 __all__ = [
     "VGG",
-    "VGG11_Weights",
-    "VGG11_BN_Weights",
+    "VGGFace",
+    # "VGG11_Weights",
+    # "VGG11_BN_Weights",
     "vgg11",
     "vgg11_bn"
 ]
@@ -70,9 +71,9 @@ class VGGFace(nn.Module):
             nn.Linear(4096, 4096),
             nn.ReLU(True),
             nn.Dropout(p=dropout),
-            # nn.Linear(4096, num_classes),
-            nn.Linear(4096, self.out_channels)
+            nn.Linear(4096, num_classes),
         )
+        self.feature_extraction = nn.Linear(num_classes, self.out_channels)
         if init_weights:
             for m in self.modules():
                 if isinstance(m, nn.Conv2d):
@@ -91,11 +92,12 @@ class VGGFace(nn.Module):
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = self.classifier(x)
+        x = self.feature_extraction(x)
         return x
 
 def make_layers(cfg: List[Union[str, int]], batch_norm: bool = False) -> nn.Sequential:
     layers: List[nn.Module] = []
-    in_channels = 1 # 3 for RGB
+    in_channels = 1 # 3 # for RGB
     for v in cfg:
         if v == "M":
             layers += [nn.MaxPool2d(kernel_size=2, stride=2)]
@@ -116,7 +118,8 @@ cfgs: Dict[str, List[Union[str, int]]] = {
     # "E": [64, 64, "M", 128, 128, "M", 256, 256, 256, 256, "M", 512, 512, 512, 512, "M", 512, 512, 512, 512, "M"],
 }
 
-def _ovewrite_named_param(kwargs: Dict[str, Any], param: str, new_value: V) -> None:
+def _ovewrite_named_param(kwargs: Dict[str, Any], param: str, new_value) -> None:
+    
     if param in kwargs:
         if kwargs[param] != new_value:
             raise ValueError(f"The parameter '{param}' expected value {new_value} but got {kwargs[param]} instead.")
@@ -126,11 +129,11 @@ def _ovewrite_named_param(kwargs: Dict[str, Any], param: str, new_value: V) -> N
 def _vgg(cfg: str, batch_norm: bool, weights, progress: bool, **kwargs: Any) -> VGG:
     if weights is not None:
         kwargs["init_weights"] = False
-        if weights.meta["categories"] is not None:
-            _ovewrite_named_param(kwargs, "num_classes", len(weights.meta["categories"]))
+        if weights is not None:
+            _ovewrite_named_param(kwargs, "num_classes", 1000)
     model = VGGFace(make_layers(cfgs[cfg], batch_norm=batch_norm), **kwargs)
     if weights is not None:
-        model.load_state_dict(weights.get_state_dict(progress=progress))
+        model.load_state_dict(weights)
     return model
 
 def vgg11(pretrained=False, progress=True, **kwargs):
@@ -151,10 +154,10 @@ def vgg11(pretrained=False, progress=True, **kwargs):
         :members:
     """
 
-    state_dict = load_state_dict_from_url(model_urls['vgg11'],
-                                              progress=progress)
-
-    model = _vgg("A", True, state_dict, progress, **kwargs)
+    # state_dict = load_state_dict_from_url(model_urls['vgg11'],
+    #                                           progress=progress)
+    state_dict = None
+    model = _vgg("A", False, state_dict, progress, **kwargs)
 
     return model
 
@@ -176,9 +179,9 @@ def vgg11_bn(pretrained=False, progress=True, **kwargs):
         :members:
     """
 
-    state_dict = load_state_dict_from_url(model_urls['vgg11_bn'],
-                                              progress=progress)
-
+    # state_dict = load_state_dict_from_url(model_urls['vgg11_bn'],
+    #                                           progress=progress)
+    state_dict = None
     model = _vgg("A", True, state_dict, progress, **kwargs)
 
     return model
