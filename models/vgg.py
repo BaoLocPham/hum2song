@@ -10,7 +10,13 @@ __all__ = [
     # "VGG11_Weights",
     # "VGG11_BN_Weights",
     "vgg11",
-    "vgg11_bn"
+    "vgg11_bn",
+    "vgg13",
+    "vgg13_bn",
+    "vgg16",
+    "vgg16_bn",
+    "vgg19",
+    "vgg19_bn",
 ]
 
 model_urls = {
@@ -115,9 +121,9 @@ def make_layers(cfg: List[Union[str, int]], batch_norm: bool = False) -> nn.Sequ
 
 cfgs: Dict[str, List[Union[str, int]]] = {
     "A": [64, "M", 128, "M", 256, 256, "M", 512, 512, "M", 512, 512, "M"],
-    # "B": [64, 64, "M", 128, 128, "M", 256, 256, "M", 512, 512, "M", 512, 512, "M"],
-    # "D": [64, 64, "M", 128, 128, "M", 256, 256, 256, "M", 512, 512, 512, "M", 512, 512, 512, "M"],
-    # "E": [64, 64, "M", 128, 128, "M", 256, 256, 256, 256, "M", 512, 512, 512, 512, "M", 512, 512, 512, 512, "M"],
+    "B": [64, 64, "M", 128, 128, "M", 256, 256, "M", 512, 512, "M", 512, 512, "M"],
+    "D": [64, 64, "M", 128, 128, "M", 256, 256, 256, "M", 512, 512, 512, "M", 512, 512, 512, "M"],
+    "E": [64, 64, "M", 128, 128, "M", 256, 256, 256, 256, "M", 512, 512, 512, 512, "M", 512, 512, 512, 512, "M"],
 }
 
 def _ovewrite_named_param(kwargs: Dict[str, Any], param: str, new_value) -> None:
@@ -185,5 +191,156 @@ def vgg11_bn(pretrained=False, progress=True, **kwargs):
     #                                           progress=progress)
     state_dict = None
     model = _vgg("A", True, state_dict, progress, **kwargs)
+
+    return model
+
+def vgg13(pretrained=False, progress=True, **kwargs):
+    """VGG-13 from `Very Deep Convolutional Networks for Large-Scale Image Recognition <https://arxiv.org/abs/1409.1556>`__.
+    Args:
+        weights (:class:`~torchvision.models.VGG13_Weights`, optional): The
+            pretrained weights to use. See
+            :class:`~torchvision.models.VGG13_Weights` below for
+            more details, and possible values. By default, no pre-trained
+            weights are used.
+        progress (bool, optional): If True, displays a progress bar of the
+            download to stderr. Default is True.
+        **kwargs: parameters passed to the ``torchvision.models.vgg.VGG``
+            base class. Please refer to the `source code
+            <https://github.com/pytorch/vision/blob/main/torchvision/models/vgg.py>`_
+            for more details about this class.
+    .. autoclass:: torchvision.models.VGG13_Weights
+        :members:
+    """
+
+    # state_dict = load_state_dict_from_url(model_urls['vgg13_bn'],
+    #                                           progress=progress)
+    state_dict = None
+    model = _vgg("B", False, state_dict, progress, **kwargs)
+
+    return model
+
+def vgg13_bn(pretrained=False, progress=True, **kwargs):
+    """VGG-13 from `Very Deep Convolutional Networks for Large-Scale Image Recognition <https://arxiv.org/abs/1409.1556>`__.
+    Args:
+        weights (:class:`~torchvision.models.VGG13_Weights`, optional): The
+            pretrained weights to use. See
+            :class:`~torchvision.models.VGG13_Weights` below for
+            more details, and possible values. By default, no pre-trained
+            weights are used.
+        progress (bool, optional): If True, displays a progress bar of the
+            download to stderr. Default is True.
+        **kwargs: parameters passed to the ``torchvision.models.vgg.VGG``
+            base class. Please refer to the `source code
+            <https://github.com/pytorch/vision/blob/main/torchvision/models/vgg.py>`_
+            for more details about this class.
+    .. autoclass:: torchvision.models.VGG13_Weights
+        :members:
+    """
+
+    # state_dict = load_state_dict_from_url(model_urls['vgg13_bn'],
+    #                                           progress=progress)
+    state_dict = None
+    model = _vgg("B", True, state_dict, progress, **kwargs)
+
+    return model
+
+
+def vgg16(pretrained=False, progress=True, **kwargs):
+    """VGG-16 from `Very Deep Convolutional Networks for Large-Scale Image Recognition <https://arxiv.org/abs/1409.1556>`__.
+    Args:
+        weights (:class:`~torchvision.models.VGG16_Weights`, optional): The
+            pretrained weights to use. See
+            :class:`~torchvision.models.VGG16_Weights` below for
+            more details, and possible values. By default, no pre-trained
+            weights are used.
+        progress (bool, optional): If True, displays a progress bar of the
+            download to stderr. Default is True.
+        **kwargs: parameters passed to the ``torchvision.models.vgg.VGG``
+            base class. Please refer to the `source code
+            <https://github.com/pytorch/vision/blob/main/torchvision/models/vgg.py>`_
+            for more details about this class.
+    .. autoclass:: torchvision.models.VGG16_Weights
+        :members:
+    """
+
+    # state_dict = load_state_dict_from_url(model_urls['vgg16_bn'],
+    #                                           progress=progress)
+    state_dict = None
+    model = _vgg("D", False, state_dict, progress, **kwargs)
+
+    return model
+
+def vgg16_bn(pretrained=False, progress=True, **kwargs):
+    """VGG-16 from `Very Deep Convolutional Networks for Large-Scale Image Recognition <https://arxiv.org/abs/1409.1556>`__.
+    Args:
+        weights (:class:`~torchvision.models.VGG16_Weights`, optional): The
+            pretrained weights to use. See
+            :class:`~torchvision.models.VGG16_Weights` below for
+            more details, and possible values. By default, no pre-trained
+            weights are used.
+        progress (bool, optional): If True, displays a progress bar of the
+            download to stderr. Default is True.
+        **kwargs: parameters passed to the ``torchvision.models.vgg.VGG``
+            base class. Please refer to the `source code
+            <https://github.com/pytorch/vision/blob/main/torchvision/models/vgg.py>`_
+            for more details about this class.
+    .. autoclass:: torchvision.models.VGG16_Weights
+        :members:
+    """
+
+    # state_dict = load_state_dict_from_url(model_urls['vgg16_bn'],
+    #                                           progress=progress)
+    state_dict = None
+    model = _vgg("D", True, state_dict, progress, **kwargs)
+
+    return model
+
+def vgg19(pretrained=False, progress=True, **kwargs):
+    """VGG-19 from `Very Deep Convolutional Networks for Large-Scale Image Recognition <https://arxiv.org/abs/1409.1556>`__.
+    Args:
+        weights (:class:`~torchvision.models.VGG19_Weights`, optional): The
+            pretrained weights to use. See
+            :class:`~torchvision.models.VGG19_Weights` below for
+            more details, and possible values. By default, no pre-trained
+            weights are used.
+        progress (bool, optional): If True, displays a progress bar of the
+            download to stderr. Default is True.
+        **kwargs: parameters passed to the ``torchvision.models.vgg.VGG``
+            base class. Please refer to the `source code
+            <https://github.com/pytorch/vision/blob/main/torchvision/models/vgg.py>`_
+            for more details about this class.
+    .. autoclass:: torchvision.models.VGG19_Weights
+        :members:
+    """
+
+    # state_dict = load_state_dict_from_url(model_urls['vgg19_bn'],
+    #                                           progress=progress)
+    state_dict = None
+    model = _vgg("E", False, state_dict, progress, **kwargs)
+
+    return model
+
+def vgg19_bn(pretrained=False, progress=True, **kwargs):
+    """VGG-19 from `Very Deep Convolutional Networks for Large-Scale Image Recognition <https://arxiv.org/abs/1409.1556>`__.
+    Args:
+        weights (:class:`~torchvision.models.VGG19_Weights`, optional): The
+            pretrained weights to use. See
+            :class:`~torchvision.models.VGG19_Weights` below for
+            more details, and possible values. By default, no pre-trained
+            weights are used.
+        progress (bool, optional): If True, displays a progress bar of the
+            download to stderr. Default is True.
+        **kwargs: parameters passed to the ``torchvision.models.vgg.VGG``
+            base class. Please refer to the `source code
+            <https://github.com/pytorch/vision/blob/main/torchvision/models/vgg.py>`_
+            for more details about this class.
+    .. autoclass:: torchvision.models.VGG19_Weights
+        :members:
+    """
+
+    # state_dict = load_state_dict_from_url(model_urls['vgg19_bn'],
+    #                                           progress=progress)
+    state_dict = None
+    model = _vgg("E", True, state_dict, progress, **kwargs)
 
     return model
