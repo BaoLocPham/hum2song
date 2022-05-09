@@ -1,4 +1,4 @@
-from model.alexnet import *
+from models.alexnet import *
 
 def get_alexnet(config):
     """

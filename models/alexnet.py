@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
 
 
-__all__ = ["AlexNet", "AlexNet_Weights", "alexnet"]
+__all__ = ["AlexNet", "AlexNetFace", "alexnet"]
 
 model_urls = {
     'alexnet':'https://download.pytorch.org/models/alexnet-owt-7be5be79.pth'
@@ -69,26 +69,27 @@ class AlexNetFace(nn.Module):
             nn.MaxPool2d(kernel_size=3, stride=2),
         )
         self.avgpool = nn.AdaptiveAvgPool2d((6, 6))
-        self.classifier = nn.Sequential(
-            nn.Dropout(p=dropout),
-            nn.Linear(256 * 6 * 6, 4096),
-            nn.ReLU(inplace=True),
-            nn.Dropout(p=dropout),
-            nn.Linear(4096, 4096),
-            nn.ReLU(inplace=True),
-            nn.Linear(4096, num_classes),
-        )
+        # self.classifier = nn.Sequential(
+        #     nn.Dropout(p=dropout),
+        #     nn.Linear(256 * 6 * 6, 4096),
+        #     nn.ReLU(inplace=True),
+        #     nn.Dropout(p=dropout),
+        #     nn.Linear(4096, 4096),
+        #     nn.ReLU(inplace=True),
+        #     nn.Linear(4096, num_classes),
+        # )
         self.feature_extraction = nn.Sequential(
-            nn.Linear(num_classes, 512),
-            # nn.BatchNorm1d(512)
+            nn.Linear(9216, 512),
+            nn.BatchNorm1d(512)
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.features(x)
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
-        x = self.classifier(x)
-        x = feature_extraction(x)
+        # print(x.shape)
+        # x = self.classifier(x)
+        x = self.feature_extraction(x)
         return x
 
 def alexnet(pretrained=False, **kwargs):
