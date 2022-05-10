@@ -70,16 +70,16 @@ class VGGFace(nn.Module):
         self.out_channels = 512
         self.features = features
         self.avgpool = nn.AdaptiveAvgPool2d((7, 7))
-        self.classifier = nn.Sequential(
-            nn.Linear(512 * 7 * 7, 4096),
-            nn.ReLU(True),
-            nn.Dropout(p=dropout),
-            nn.Linear(4096, 4096),
-            nn.ReLU(True),
-            nn.Dropout(p=dropout),
-            nn.Linear(4096, num_classes),
-        )
-        self.feature_extraction = nn.Linear(num_classes, self.out_channels)
+        # self.classifier = nn.Sequential(
+        #     nn.Linear(512 * 7 * 7, 4096),
+        #     nn.ReLU(True),
+        #     nn.Dropout(p=dropout),
+        #     nn.Linear(4096, 4096),
+        #     nn.ReLU(True),
+        #     nn.Dropout(p=dropout),
+        #     nn.Linear(4096, num_classes),
+        # )
+        self.feature_extraction = nn.Linear(25088, self.out_channels)
         self.bn = nn.BatchNorm1d(self.out_channels)
         if init_weights:
             for m in self.modules():
@@ -98,7 +98,8 @@ class VGGFace(nn.Module):
         x = self.features(x)
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
-        x = self.classifier(x)
+        # print(x.shape)
+        # x = self.classifier(x)
         x = self.feature_extraction(x)
         x = self.bn(x)
         return x
