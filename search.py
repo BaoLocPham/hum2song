@@ -11,13 +11,19 @@ from models import model
 
 config = Config()
 start_time_load_model = time.time()
-# model = wrap_wrap_resnet_face18(False)
-# model.load_state_dict(torch.load(os.path.join(config.checkpoints_path, 'resnet18_latest.pth')))
-# model = get_wrap_resnet(config=config)
 
 model = model.get_model(config=config)
 print(os.path.join(config.checkpoints_path, f'{config.backbone}_latest.pth'))
-model.load_state_dict(torch.load(os.path.join(config.checkpoints_path, f'{config.backbone}_latest.pth')),  strict=False)
+# original saved file with DataParallel
+state_dict = torch.load(os.path.join(config.checkpoints_path, f'{config.backbone}_latest.pth'))
+# create new OrderedDict that does not contain `module.`
+from collections import OrderedDict
+new_state_dict = OrderedDict()
+for k, v in state_dict.items():
+    name = k[7:] # remove `module.`
+    new_state_dict[name] = v
+# load params
+model.load_state_dict(new_state_dict)
 model.to('cuda')
 model.eval()
 print('TIME LOAD MODEL: ', time.time() - start_time_load_model)
