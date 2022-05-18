@@ -41,35 +41,35 @@ def get_resnet(config):
     #     model = resnet_face101(use_se=config.use_se)
     return model
 
-def resnet_face18(use_se=True, **kwargs):
-    model = ResNetFace(IRBlock, [2, 3, 4, 3], use_se=use_se, **kwargs)
-    return model
+# def resnet_face18(use_se=True, **kwargs):
+#     model = ResNetFace(IRBlock, [2, 3, 4, 3], use_se=use_se, **kwargs)
+#     return model
 
 
-def wrap_resnet_face18(use_se=True, **kwargs):
-    model = WrapModule(IRBlock, [2, 3, 4, 3], use_se=use_se, **kwargs)
-    return model
+# def wrap_resnet_face18(use_se=True, **kwargs):
+#     model = WrapModule(IRBlock, [2, 3, 4, 3], use_se=use_se, **kwargs)
+#     return model
 
-def resnet_face34(use_se=True, **kwargs):
-    model = ResNetFace(IRBlock, [3, 4, 6, 3], use_se=use_se, **kwargs)
-    return model
+# def resnet_face34(use_se=True, **kwargs):
+#     model = ResNetFace(IRBlock, [3, 4, 6, 3], use_se=use_se, **kwargs)
+#     return model
 
-def wrap_resnet_face34(use_se=True, **kwargs):
-    model = WrapModule(IRBlock, [3, 4, 6, 3], use_se=use_se, **kwargs)
-    return model
+# def wrap_resnet_face34(use_se=True, **kwargs):
+#     model = WrapModule(IRBlock, [3, 4, 6, 3], use_se=use_se, **kwargs)
+#     return model
 
-def resnet_face34(use_se=True, **kwargs):
-    model = ResNetFace(IRBlock, [3, 4, 6, 3], use_se=use_se, **kwargs)
-    return model
+# def resnet_face34(use_se=True, **kwargs):
+#     model = ResNetFace(IRBlock, [3, 4, 6, 3], use_se=use_se, **kwargs)
+#     return model
 
-def wrap_resnet_face34(use_se=True, **kwargs):
-    model = WrapModule(IRBlock, [3, 4, 6, 3], use_se=use_se, **kwargs)
-    return model
+# def wrap_resnet_face34(use_se=True, **kwargs):
+#     model = WrapModule(IRBlock, [3, 4, 6, 3], use_se=use_se, **kwargs)
+#     return model
 
-def resnet_face50(use_se=True, **kwargs):
-    model = ResNetFace(IRBlock, [3, 4, 6, 3], use_se=use_se, **kwargs)
-    return model
+# def resnet_face50(use_se=True, **kwargs):
+#     model = ResNetFace(IRBlock, [3, 4, 6, 3], use_se=use_se, **kwargs)
+#     return model
 
-def wrap_resnet_face50(use_se=True, **kwargs):
-    model = WrapModule(IRBlock, [3, 4, 6, 3], use_se=use_se, **kwargs)
-    return model
+# def wrap_resnet_face50(use_se=True, **kwargs):
+#     model = WrapModule(IRBlock, [3, 4, 6, 3], use_se=use_se, **kwargs)
+#     return model
