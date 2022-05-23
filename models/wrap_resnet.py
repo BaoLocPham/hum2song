@@ -37,8 +37,10 @@ def get_resnet(config):
         model = resnet_face34(use_se=config.use_se)
     elif config.backbone == 'resnet50':
         model = resnet_face50(use_se=config.use_se)
-    # elif config.backbone == 'resnet101':
-    #     model = resnet_face101(use_se=config.use_se)
+    elif config.backbone == 'resnet101':
+        model = resnet_face101(use_se=config.use_se)
+    elif config.backbone == 'resnet152':
+        model = resnet_face152(use_se=config.use_se)
     return model
 
 # def resnet_face18(use_se=True, **kwargs):
